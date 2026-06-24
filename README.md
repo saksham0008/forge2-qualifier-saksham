@@ -48,8 +48,8 @@ npm run dev              # runs on http://localhost:5173
 
 ## Live URL
 
-> **Frontend:** https://forge2-kanban.vercel.app
-> **API:** https://forge2-kanban-api.onrender.com
+> **Frontend:** https://forge2-qualifier-saksham.vercel.app
+> **API:** https://forge2-kanban-api-ex95.onrender.com
 
 ## Agent setup
 
