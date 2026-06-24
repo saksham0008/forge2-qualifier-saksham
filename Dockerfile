@@ -20,12 +20,11 @@ RUN cp .env.example .env
 RUN sed -i 's|APP_ENV=.*|APP_ENV=production|' .env
 RUN sed -i 's|APP_DEBUG=.*|APP_DEBUG=false|' .env
 RUN sed -i 's|DB_CONNECTION=.*|DB_CONNECTION=sqlite|' .env
-RUN sed -i '/^# DB_DATABASE/d' .env
-RUN echo "DB_DATABASE=/app/database/database.sqlite" >> .env
 RUN sed -i 's|SESSION_DRIVER=.*|SESSION_DRIVER=file|' .env
 RUN sed -i 's|CACHE_STORE=.*|CACHE_STORE=array|' .env
 RUN sed -i 's|QUEUE_CONNECTION=.*|QUEUE_CONNECTION=sync|' .env
 RUN sed -i 's|LOG_CHANNEL=.*|LOG_CHANNEL=stderr|' .env
+RUN echo 'DB_DATABASE=/app/database/database.sqlite' >> .env
 
 RUN php artisan key:generate --force
 
