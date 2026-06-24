@@ -11,6 +11,7 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
+# cache-bust: v5
 COPY backend/ .
 
 RUN composer install --no-dev --optimize-autoloader
@@ -27,7 +28,7 @@ RUN sed -i 's|LOG_CHANNEL=.*|LOG_CHANNEL=stderr|' .env
 RUN echo 'DB_DATABASE=/app/database/database.sqlite' >> .env
 
 RUN php artisan key:generate --force
-
+RUN php artisan config:clear
 RUN touch /app/database/database.sqlite
 RUN php artisan migrate --force
 
