@@ -15,19 +15,22 @@ COPY backend/ .
 
 RUN composer install --no-dev --optimize-autoloader
 
-RUN touch /app/database/database.sqlite
-
+# Create .env
 RUN cp .env.example .env && \
     sed -i 's|DB_CONNECTION=.*|DB_CONNECTION=sqlite|' .env && \
-    sed -i 's|# DB_DATABASE=.*|DB_DATABASE=/app/database/database.sqlite|' .env
+    sed -i 's|# DB_DATABASE=.*|DB_DATABASE=/app/database/database.sqlite|' .env && \
+    sed -i 's|APP_DEBUG=.*|APP_DEBUG=true|' .env
 
 RUN php artisan key:generate --force
-RUN php artisan migrate --force
 
-RUN chown -R www-data:www-data /app/storage /app/bootstrap/cache /app/database && \
-    chmod -R 775 /app/storage /app/bootstrap/cache /app/database
+# Create and seed the database
+RUN touch /app/database/database.sqlite && \
+    php artisan migrate --force
 
-# Copy nginx config
+# Permissions
+RUN chmod -R 777 /app/storage /app/bootstrap/cache /app/database
+
+# Nginx config
 COPY nginx.conf /etc/nginx/sites-available/default
 
 EXPOSE 8000
