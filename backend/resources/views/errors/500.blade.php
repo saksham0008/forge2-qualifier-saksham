@@ -1,0 +1,2 @@
+<!DOCTYPE html>
+<html><body><h1>Server Error</h1></body></html>
