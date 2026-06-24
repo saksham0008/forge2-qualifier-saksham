@@ -32,7 +32,14 @@ RUN php artisan key:generate --force
 RUN touch /app/database/database.sqlite
 RUN php artisan migrate --force
 
-# Permissions - make everything writable
+# Create all required Laravel storage directories
+RUN mkdir -p /app/storage/framework/sessions \
+    /app/storage/framework/views \
+    /app/storage/framework/cache/data \
+    /app/storage/logs \
+    /app/bootstrap/cache
+
+# Permissions
 RUN chmod -R 777 /app/storage
 RUN chmod -R 777 /app/bootstrap/cache
 RUN chmod -R 777 /app/database
