@@ -17,6 +17,11 @@ RUN composer install --no-dev --optimize-autoloader
 
 RUN touch /app/database/database.sqlite
 
+# Create .env from example and set required values
+RUN cp .env.example .env && \
+    sed -i 's|DB_CONNECTION=.*|DB_CONNECTION=sqlite|' .env && \
+    sed -i 's|# DB_DATABASE=.*|DB_DATABASE=/app/database/database.sqlite|' .env
+
 RUN php artisan key:generate --force
 RUN php artisan migrate --force
 
