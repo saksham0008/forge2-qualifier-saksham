@@ -1,0 +1,24 @@
+# Hermes agent config (secrets removed — see .env.example for required env vars)
+model:
+  provider: groq
+  model: openai/gpt-oss-120b
+  baseUrl: https://api.groq.com/openai/v1
+  apiKey: ${GROQ_API_KEY}
+
+fallbackModel:
+  provider: gemini
+  model: gemini-2.5-flash
+  baseUrl: https://generativelanguage.googleapis.com/v1beta/openai/
+  apiKey: ${GEMINI_API_KEY}
+
+memory:
+  enabled: true
+  persistAcrossSessions: true
+
+skills:
+  path: ./skills
+
+cron:
+  - schedule: "*/10 * * * *"
+    task: "Post a one-line progress update to #agent-log summarising current build status."
+    channel: "#agent-log"

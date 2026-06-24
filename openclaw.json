@@ -1,0 +1,24 @@
+{
+  "version": "1",
+  "workspace": "./",
+  "model": {
+    "provider": "ollama",
+    "baseUrl": "http://localhost:11434/v1",
+    "model": "qwen2.5-coder",
+    "apiKey": "ollama"
+  },
+  "fallbackModel": {
+    "provider": "groq",
+    "baseUrl": "https://api.groq.com/openai/v1",
+    "model": "llama-3.3-70b-versatile",
+    "apiKey": "${GROQ_API_KEY}"
+  },
+  "channels": {
+    "slack": {
+      "enabled": true,
+      "mode": "socket",
+      "appToken": { "source": "env", "provider": "default", "id": "SLACK_APP_TOKEN" },
+      "botToken": { "source": "env", "provider": "default", "id": "SLACK_BOT_TOKEN" }
+    }
+  }
+}

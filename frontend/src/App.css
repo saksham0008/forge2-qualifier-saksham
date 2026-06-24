@@ -1,0 +1,17 @@
+.home { padding: 24px; max-width: 1200px; margin: 0 auto; }
+.home-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+.home-header h1 { font-size: 24px; }
+.board-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+.board-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 18px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.board-card:hover { border-color: #6366f1; }
+.board-card h2 { font-size: 16px; margin-bottom: 6px; }
+.board-card p  { font-size: 13px; color: #94a3b8; margin-bottom: 8px; }
+.board-meta    { font-size: 12px; color: #64748b; }
+.empty { color: #64748b; }

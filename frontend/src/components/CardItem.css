@@ -1,0 +1,17 @@
+.card-item {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 0.15s;
+}
+.card-item:hover { border-color: #6366f1; }
+.card-item.overdue { border-color: #ef4444; }
+.card-title { font-size: 14px; margin-bottom: 6px; }
+.card-meta { display: flex; flex-wrap: wrap; gap: 4px; font-size: 11px; align-items: center; }
+.tag { padding: 2px 6px; border-radius: 10px; color: #fff; font-weight: 500; }
+.due { color: #94a3b8; }
+.due-overdue { color: #f87171; }
+.assignee { color: #94a3b8; }
