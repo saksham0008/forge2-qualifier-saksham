@@ -19,7 +19,10 @@ RUN composer install --no-dev --optimize-autoloader
 RUN cp .env.example .env && \
     sed -i 's|DB_CONNECTION=.*|DB_CONNECTION=sqlite|' .env && \
     sed -i 's|# DB_DATABASE=.*|DB_DATABASE=/app/database/database.sqlite|' .env && \
-    sed -i 's|APP_DEBUG=.*|APP_DEBUG=true|' .env
+    sed -i 's|APP_DEBUG=.*|APP_DEBUG=true|' .env && \
+    sed -i 's|SESSION_DRIVER=.*|SESSION_DRIVER=file|' .env && \
+    sed -i 's|CACHE_STORE=.*|CACHE_STORE=file|' .env && \
+    sed -i 's|QUEUE_CONNECTION=.*|QUEUE_CONNECTION=sync|' .env
 
 RUN php artisan key:generate --force
 
