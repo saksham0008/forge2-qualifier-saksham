@@ -15,23 +15,28 @@ COPY backend/ .
 
 RUN composer install --no-dev --optimize-autoloader
 
-# Create .env
-RUN cp .env.example .env && \
-    sed -i 's|DB_CONNECTION=.*|DB_CONNECTION=sqlite|' .env && \
-    sed -i 's|# DB_DATABASE=.*|DB_DATABASE=/app/database/database.sqlite|' .env && \
-    sed -i 's|APP_DEBUG=.*|APP_DEBUG=true|' .env && \
-    sed -i 's|SESSION_DRIVER=.*|SESSION_DRIVER=file|' .env && \
-    sed -i 's|CACHE_STORE=.*|CACHE_STORE=file|' .env && \
-    sed -i 's|QUEUE_CONNECTION=.*|QUEUE_CONNECTION=sync|' .env
+# Create .env with all safe settings
+RUN cp .env.example .env
+RUN sed -i 's|APP_ENV=.*|APP_ENV=production|' .env
+RUN sed -i 's|APP_DEBUG=.*|APP_DEBUG=false|' .env
+RUN sed -i 's|DB_CONNECTION=.*|DB_CONNECTION=sqlite|' .env
+RUN sed -i '/^# DB_DATABASE/d' .env
+RUN echo "DB_DATABASE=/app/database/database.sqlite" >> .env
+RUN sed -i 's|SESSION_DRIVER=.*|SESSION_DRIVER=file|' .env
+RUN sed -i 's|CACHE_STORE=.*|CACHE_STORE=array|' .env
+RUN sed -i 's|QUEUE_CONNECTION=.*|QUEUE_CONNECTION=sync|' .env
+RUN sed -i 's|LOG_CHANNEL=.*|LOG_CHANNEL=stderr|' .env
 
 RUN php artisan key:generate --force
 
-# Create and seed the database
-RUN touch /app/database/database.sqlite && \
-    php artisan migrate --force
+RUN touch /app/database/database.sqlite
+RUN php artisan migrate --force
 
-# Permissions
-RUN chmod -R 777 /app/storage /app/bootstrap/cache /app/database
+# Permissions - make everything writable
+RUN chmod -R 777 /app/storage
+RUN chmod -R 777 /app/bootstrap/cache
+RUN chmod -R 777 /app/database
+RUN chown -R www-data:www-data /app
 
 # Nginx config
 COPY nginx.conf /etc/nginx/sites-available/default
