@@ -10,8 +10,12 @@ export default function App() {
   const [adding, setAdding]     = useState(false)
 
   const load = async () => {
-    const res = await getBoards()
-    setBoards(res.data)
+    try {
+      const res = await getBoards()
+      setBoards(Array.isArray(res.data) ? res.data : [])
+    } catch {
+      setBoards([])
+    }
   }
 
   useEffect(() => { load() }, [])

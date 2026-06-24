@@ -14,8 +14,12 @@ export default function BoardView({ boardId, onBack }) {
   const [addingList, setAddingList] = useState(false)
 
   const refresh = useCallback(async () => {
-    const res = await getBoard(boardId)
-    setBoard(res.data)
+    try {
+      const res = await getBoard(boardId)
+      setBoard(res.data)
+    } catch {
+      // API not reachable in this environment
+    }
   }, [boardId])
 
   useEffect(() => { refresh() }, [refresh])
