@@ -24,7 +24,8 @@ RUN cp .env.example .env && \
 RUN php artisan key:generate --force
 RUN php artisan migrate --force
 
-RUN chown -R www-data:www-data /app/storage /app/bootstrap/cache /app/database
+RUN chown -R www-data:www-data /app/storage /app/bootstrap/cache /app/database && \
+    chmod -R 775 /app/storage /app/bootstrap/cache /app/database
 
 # Copy nginx config
 COPY nginx.conf /etc/nginx/sites-available/default
